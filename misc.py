@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#Auxiliary function for KerBS
 import tensorflow as tf
 
 def debug_print(content, verbose=False,  tff=True):
@@ -19,7 +21,6 @@ def advanced_add_to_collections(name, value, name_value):
 def advanced_get_collection(name, name_value):
     name_name=name+'_name'
     value_dict=dict(zip(tf.get_collection(name_name), tf.get_collection(name)))
-    #print(value_dict)
     if name_value in value_dict:
         return value_dict[name_value]
     return None

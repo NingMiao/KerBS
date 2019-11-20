@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#Hooks for dynamically allocating senses.
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -52,7 +54,7 @@ class HvdReallocateHook(tf.train.SessionRunHook):
         self._collection_dict = {}
         name_list=['label_ids', 'mask', 'word_probs', 'sense_probs', 'sense_allocate', 'usage', 'efficiency', 'sense_allocate_matrix', 'word_count']
         for item in name_list:
-            self._collection_dict[item] = advanced_get_collection('bas_collection', item)
+            self._collection_dict[item] = advanced_get_collection('kerbs_collection', item)
         vocab_size=self._collection_dict['efficiency'].shape[-1]
         
         bayes_component=self._collection_dict['usage'].shape[-1] // vocab_size
@@ -113,26 +115,12 @@ class HvdReallocateHook(tf.train.SessionRunHook):
         pass
     
     def before_run(self, run_context):
-        """ Dumps graphs and loads checkpoint if there exits.
-        
-        Called before each call to run().
-
-        Args:
-            run_context: A `SessionRunContext` object.
-
-        Returns: A `SessionRunArgs` object containing global_step and
-          arguments to be displayed.
+        """ Run self._fetch_args
         """
         return tf.train.SessionRunArgs(self._fetch_args)
 
     def after_run(self, run_context, run_values):
-        """ Checks running steps and print args.
-
-        Also checks the maximum training steps to raise stop request.
-
-        Args:
-            run_context: A `SessionRunContext` object.
-            run_values: A SessionRunValues object.
+        """ Get the updated sense allocation matrix and broadcast it.
         """
         global_step = run_values.results.pop("global_step")
         if self._timer.should_trigger_for_step(global_step-1):

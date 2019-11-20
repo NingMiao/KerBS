@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#Custom reallocation strategy
 import tensorflow as tf
 import numpy as np
 
@@ -52,7 +54,6 @@ def get_new_sense_allocate(allreduce_args):
             break
     tf.logging.info('Reallocate number of this step:{}'.format(change_count))
     return current_allocate
-    #return allreduce_args['sense_allocate']
 
 if __name__=='__main__':
     import pickle as pkl
