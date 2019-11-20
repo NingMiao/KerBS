@@ -10,7 +10,7 @@ KerBS is a powerful substitute for Softmax. Please refer to our [paper](https://
   - TensorFlow `== 1.4.0` (Other versions are not tested.)
   - numpy
   - pickle
-  - horovod (Running without horovod needs some slight modification.)
+  - horovod (Running without horovod needs some slight modifications.)
   
 ## Running
 - To replace Softmax with KerBs, change the output layer to
