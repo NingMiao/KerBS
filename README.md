@@ -13,7 +13,7 @@ KerBS is a powerful substitute for Softmax. Please refer to our [paper](https://
   - horovod (Running without horovod needs some slight modifications.)
   
 ## Running
-- To replace Softmax with KerBS, change the output layer to
+- To replace Softmax with KerBS, change the output layer to `KerBS_top.kerbs_top`, for example, 
   ```python
   logits = KerBS_top.kerbs_top(top_features=h, bayes_component=3, top_dimension=10000, dtype=tf.float32)
   ```
